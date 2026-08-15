@@ -116,9 +116,6 @@ The circuit diagram illustrates the electrical interconnection between the Ardui
 
 The suction system is built using a simple, effective DIY approach:
 
-### Vacuum Mechanism Diagram
-![Vacuum Mechanism Diagram](architecture/vacuum_mechanism_diagram.jpg)
-
 ### Working of the Vacuum Chamber:
 1. **Chamber Structure**: A standard plastic bottle is cut and inverted to form a tapered suction chamber.
 2. **Propeller Fan Assembly**: A small high-RPM DC motor equipped with a propeller/fan is mounted at the narrow outlet end of the bottle.
@@ -192,10 +189,9 @@ Demonstration video clips of the physical prototype are stored in the [`video/`]
 ├── README.md                                          # Master documentation file
 ├── generate_diagrams.py                              # Python script for generating diagrams
 ├── architecture/
-│   ├── block_diagram.jpg                             # System architecture block diagram
-│   └── vacuum_mechanism_diagram.jpg                  # Bottle-based vacuum mechanism diagram
+│   └── block_diagram.jpg                             # Clean system architecture block diagram
 ├── circuit/
-│   └── circuit_diagram.jpg                           # System circuit schematic diagram
+│   └── circuit_diagram.jpg                           # Clean circuit schematic block diagram
 ├── code/
 │   └── vaccum.ino                                    # Arduino UNO firmware source code
 ├── photos/
