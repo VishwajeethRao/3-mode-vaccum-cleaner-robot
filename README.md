@@ -1,86 +1,151 @@
-# 3-Mode Autonomous Vacuum Cleaner Robot (Autonomous, Bluetooth & Voice Control)
+# 3-Mode Vacuum Cleaner Robot (Autonomous, Bluetooth & Voice Control)
 
-An intelligent, multi-mode hardware prototype for an automated vacuum cleaning robot built with Arduino UNO. The system combines autonomous obstacle avoidance, manual Bluetooth app navigation, and voice command recognition to deliver efficient, hands-free indoor cleaning.
-
----
-
-## 📖 Short Description
-
-This project features a 4-wheel drive robotic vacuum cleaner controlled by an Arduino UNO microcontroller. It is designed to clean indoor floor surfaces through three operating modes: **Autonomous Obstacle Avoidance**, **Manual Bluetooth App Control**, and **Hands-free Voice Command Integration**. Equipped with a mini vacuum suction module, HC-SR04 ultrasonic distance sensor mounted on an SG90 servo motor, and an HC-05 Bluetooth module, the robot offers an affordable, customizable alternative to commercial robotic vacuum cleaners.
+An Arduino-based 3-mode robotic vacuum cleaner designed for automated and manual indoor floor cleaning. The project integrates an **Arduino UNO** microcontroller, an **L293D motor driver**, **4 × 5 V, 200 RPM geared DC motors**, an **HC-SR04 ultrasonic obstacle sensor**, an **HC-05 Bluetooth module**, a **foam-sheet body with spray paint finish**, and a **bottle-based vacuum collection system**.
 
 ---
 
-## 🎯 Problem Solved
+## 📖 Project Overview
 
-Traditional household floor cleaning is time-consuming, physically demanding, and requires continuous human supervision. While commercial robotic vacuum cleaners exist, they are often expensive, proprietary, and lack customizable control options. 
+This project presents a college engineering prototype of a 4-wheel drive (4WD) robotic vacuum cleaner. The robot is designed to perform floor cleaning using three distinct operation modes: **Voice Control Mode**, **Bluetooth / Mobile Control Mode**, and **Remote Control Mode**. Wireless communication between the user's mobile application and the robot is handled via the HC-05 Bluetooth module.
 
-This project addresses these challenges by:
-- Automating repetitive floor cleaning tasks to save time and manual effort.
-- Providing multiple control options (autonomous navigation, smartphone app control, and voice interaction) suitable for diverse user needs, including working professionals and individuals with mobility constraints.
-- Offering a low-cost, open-hardware DIY platform suitable for educational demonstrations, embedded robotics research, and home automation applications.
+Dust and lightweight floor debris are collected using a custom vacuum mechanism crafted from a modified plastic bottle, a small DC motor with a propeller/fan, and a fine mesh filter.
 
 ---
 
-## ✨ Main Features
+## 🎯 Problem Statement & Objective
 
-- **Multi-Mode Operation**:
-  - **Autonomous Obstacle Avoidance Mode**: Self-navigating floor cleaning using real-time ultrasonic distance scanning to detect obstacles within 12 cm and dynamically re-route the robot.
-  - **Bluetooth Control Mode**: Manual direction control (Forward, Backward, Left, Right, Stop) operated wirelessly via a smartphone application connected to an HC-05 Bluetooth module.
-  - **Voice Control Mode**: Hands-free movement execution based on recognized speech strings ("forward", "backward", "left", "right", "stop").
-- **Integrated Cleaning System**: Onboard mini vacuum motor / suction fan and dustbin for debris collection.
-- **Dynamic Servo Scanning**: SG90 servo motor rotates the HC-SR04 ultrasonic sensor left (180°) and right (20°) to sweep and identify the clearest path when obstacles are encountered.
-- **4-Wheel Drive Mobility**: Driven by 4 DC motors paired with an Adafruit Motor Shield / L293D motor driver module for smooth indoor navigation.
+Traditional household floor cleaning requires continuous manual effort. While commercial robotic vacuum cleaners exist, they are often expensive, complex, and proprietary. 
+
+This project demonstrates an affordable, modular, open-hardware prototype that:
+- Automates basic floor cleaning and obstacle detection.
+- Provides versatile user control through smartphone voice commands, touch control, and remote interfaces.
+- Utilizes simple, accessible components suitable for academic learning and embedded robotics research.
 
 ---
 
-## 🛠️ Components Used
+## ✨ Key Features & Operating Modes
 
-| Component | Quantity | Description / Specifications |
+### 1. Control Modes
+- **Voice Control Mode**: The user speaks voice commands into the mobile application (e.g., "forward", "backward", "left", "right", "stop"). The app converts speech to text and transmits corresponding serial strings wirelessly to the Arduino.
+- **Bluetooth / Mobile Control Mode**: The user maneuvers the robot using directional buttons on the mobile application, which transmits single-character serial commands (`'F'`, `'B'`, `'L'`, `'R'`, `'S'`) to steer the 4 DC motors.
+- **Remote Control Mode**: The user navigates the robot through a dedicated remote-control interface on the mobile application.
+
+> [!IMPORTANT]
+> **Firmware / Code Upload Requirement**:
+> Different Arduino programs/codes need to be uploaded to the Arduino UNO depending on the operating mode/function being demonstrated. The robot does **NOT** automatically change its internal Arduino firmware between modes. Before testing or demonstrating a specific mode (e.g., Voice Control vs. Bluetooth Control), the corresponding Arduino sketch must be flashed via the Arduino IDE.
+
+### 2. Physical Construction & Vacuum System
+- **4WD Mobility**: Powered by 4 DC geared motors (5 V, 200 RPM) driven via an L293D motor driver.
+- **Foam-Sheet Chassis**: Custom body constructed from lightweight foam sheet finished with protective spray paint.
+- **Bottle Vacuum System**: A cut and inverted plastic bottle forms a sealed suction chamber where a small DC motor with a rotating propeller creates negative pressure. A mesh filter retains collected garbage inside while allowing exhaust air to exit.
+- **Main Power Control**: A master ON/OFF switch controls the power flow to the system.
+
+---
+
+## 🛠️ Hardware Description
+
+| Component | Quantity | Specifications & Technical Description |
 | :--- | :---: | :--- |
-| **Arduino UNO** | 1 | ATmega328P based microcontroller board |
-| **Adafruit Motor Shield (L293D)** | 1 | Dual H-Bridge motor driver shield for controlling 4 DC motors & servo |
-| **HC-SR04 Ultrasonic Sensor** | 1 | Distance sensor (2cm - 400cm range) for obstacle detection |
-| **SG90 Micro Servo Motor** | 1 | Positional servo for rotating the ultrasonic sensor (180° sweep) |
-| **HC-05 Bluetooth Module** | 1 | Wireless serial communication module (baud rate 9600) |
-| **Mini Vacuum Motor / Suction Fan** | 1 | Onboard suction mechanism for dust collection |
-| **BO Motors with Wheels** | 4 | Geared DC motors for 4WD movement |
-| **Li-ion Battery Pack / Power Source** | 1 | Rechargeable power supply (7.4V / 12V) |
-| **Robot Chassis** | 1 | Custom lightweight chassis with dustbin compartment |
-| **Power Switch & Jumper Wires** | As required | SPST switch, male-to-male jumper cables, and breadboard |
+| **Arduino UNO** | 1 | Main microcontroller board based on ATmega328P. Executes movement algorithms and processes incoming Bluetooth commands. (Requires mode-specific code upload). |
+| **L293D Motor Driver** | 1 | Dual H-Bridge motor driver module/IC responsible for driving the 4 DC motors, providing high-current output beyond the Arduino's pin capability. |
+| **DC Geared Motors** | 4 | 5 V, 200 RPM DC motors providing smooth 4-wheel drive (4WD) movement for chassis navigation. |
+| **HC-05 Bluetooth Module** | 1 | Wireless serial communication module operating at 2.4 GHz (9600 baud) for linking the mobile app to the Arduino. |
+| **HC-SR04 Ultrasonic Sensor** | 1 | Input sensor mounted on the front chassis used for detecting obstacles in front of the robot. |
+| **Foam-Sheet Robot Body** | 1 | Custom lightweight chassis and structural frame made primarily from foam sheet. |
+| **Spray Paint Finish** | As required | Protective and aesthetic spray paint coating applied to the foam-sheet chassis. |
+| **Plastic Bottle Vacuum Chamber** | 1 | Modified plastic bottle (cut and inverted) serving as the suction chamber and garbage collection container. |
+| **Small DC Motor + Propeller** | 1 | High-speed small DC motor with attached fan/propeller that generates continuous air suction. |
+| **Mesh Filter** | 1 | Fine mesh screen placed across the bottle opening allowing air exhaust while retaining garbage inside. |
+| **Main ON/OFF Switch** | 1 | Master mechanical power switch controlling the electrical supply to the entire system. |
 
 ---
 
-## ⚡ Working Principle
+## 📐 System Architecture
 
-1. **Control Unit & Sensing**:
-   - The **Arduino UNO** acts as the main controller.
-   - In **Autonomous Mode**, the **HC-SR04 ultrasonic sensor** continuously measures the distance to obstacles in front of the robot.
-   - If an obstacle is detected within **12 cm**, the robot halts, moves backward briefly, and signals the **SG90 servo motor** to rotate left (`180°`) and right (`20°`) to evaluate distances in both directions.
-   - The microcontroller compares the left and right clearance readings, turns the robot toward the clearer side, and resumes forward cleaning motion.
+The overall system architecture separates main control logic and power management from the physical vacuum suction assembly.
 
-2. **Wireless Communication**:
-   - In **Bluetooth Control Mode**, the **HC-05 module** listens for serial commands from a paired mobile app. Characters `'F'`, `'B'`, `'L'`, `'R'`, and `'S'` trigger forward, backward, left, right, and stop motor states respectively.
-   - In **Voice Control Mode**, received serial text strings ("forward", "backward", "left", "right", "stop") are parsed by the Arduino. For turn commands, the robot inspects space using the ultrasonic sensor before moving to ensure safe maneuvering.
+### System Architecture Block Diagram
+![System Architecture](architecture/block_diagram.jpg)
 
-3. **Suction & Cleaning**:
-   - The onboard suction fan runs continuously during operation to pull dust and fine particles into the onboard collection bin while the robot navigates the floor.
+### Architectural Flow:
+```text
+Main Power Supply (ON/OFF Switch)
+        ↓
+Arduino + Motor Control System
+
+Arduino UNO
+├── L293D Motor Driver → 4 × 5 V, 200 RPM DC Motors
+├── HC-SR04 Ultrasonic Sensor → Obstacle Detection (Input)
+└── HC-05 Bluetooth Module ↔ Mobile Application
+
+Mobile Application Interface:
+├── Voice Control
+├── Bluetooth / Mobile Control
+└── Remote Control
+
+Vacuum Cleaning Mechanism (Separate Assembly):
+Power / Control → Small DC Motor → Propeller/Fan → Air & Debris Suction → Plastic Bottle → Mesh Filter
+```
 
 ---
 
-## 📐 System Architecture & Circuit Diagram
+## 🔌 Circuit Schematic Diagram
 
-### System Block Diagram
-![Block Diagram](architecture/block_diagram.jpg)
+The circuit diagram illustrates the electrical interconnection between the Arduino UNO controller, L293D driver, motors, sensors, Bluetooth module, power switch, and vacuum motor.
 
 ### Circuit Diagram
 ![Circuit Diagram](circuit/circuit_diagram.jpg)
 
+### Interconnection Summary:
+- **Power Connection**: The Main ON/OFF switch connects the primary power source to the Arduino Vin pin, L293D VCC, and vacuum motor circuit.
+- **L293D Motor Driver**:
+  - Connected to Arduino digital pins for directional input signals (`IN1`, `IN2`, `IN3`, `IN4`).
+  - Motor outputs (`OUT1`–`OUT4`) connect to the four 5 V, 200 RPM DC drive motors (front-left, rear-left, front-right, rear-right).
+- **HC-05 Bluetooth Module**:
+  - Connected to Arduino serial hardware/software pins (`TX` to Arduino `RX`, `RX` to Arduino `TX`).
+  - Powered via Arduino 5 V and GND rails.
+- **HC-SR04 Ultrasonic Sensor**:
+  - Connected to Arduino pins for `Trig` (trigger pulse) and `Echo` (echo return).
+  - Powered via Arduino 5 V and GND rails.
+- **Vacuum Motor**:
+  - Connected across the power/control line to drive the suction propeller continuously during operation.
+
 ---
 
-## 🖼️ Hardware Gallery & Demonstration
+## 🌀 Vacuum Mechanism Details
 
-### Prototype Photos
-| Front & Sensor View | Side Profile | Suction Chamber |
+The suction system is built using a simple, effective DIY approach:
+
+### Vacuum Mechanism Diagram
+![Vacuum Mechanism Diagram](architecture/vacuum_mechanism_diagram.jpg)
+
+### Working of the Vacuum Chamber:
+1. **Chamber Structure**: A standard plastic bottle is cut and inverted to form a tapered suction chamber.
+2. **Propeller Fan Assembly**: A small high-RPM DC motor equipped with a propeller/fan is mounted at the narrow outlet end of the bottle.
+3. **Suction Generation**: When powered, the rotating propeller forces air out of the rear, creating low pressure (vacuum) inside the bottle.
+4. **Debris Intake**: Atmospheric pressure forces outside air and floor dust/garbage into the front bottle inlet.
+5. **Garbage Retention**: A fine mesh filter screen spans the bottle section. Air passes freely through the mesh, while collected dust and garbage remain trapped inside the bottle chamber.
+
+---
+
+## ⚡ Step-by-Step Working Principle
+
+1. **Power On**: The user turns the robot ON using the main ON/OFF switch.
+2. **System Initialization**: The Arduino initializes input/output pins, serial communication with the HC-05 module, and sensor routines.
+3. **Control Mode Selection**: The user selects the desired operating mode (Voice Control, Bluetooth Control, or Remote Control) in the smartphone mobile application.
+4. **Command Transmission**: The mobile application sends wireless control commands via Bluetooth to the HC-05 module connected to the Arduino.
+5. **Signal Processing**: The Arduino receives and decodes the commands, translating them into motor movement instructions.
+6. **Motor Drive Execution**: Arduino sends control signals to the L293D motor driver.
+7. **4WD Chassis Movement**: The L293D drives the four 5 V, 200 RPM DC motors to move forward, backward, left, right, or stop.
+8. **Obstacle Detection**: The HC-SR04 ultrasonic sensor continuously scans for obstacles in front of the robot to prevent collisions.
+9. **Suction Generation**: The small DC motor and propeller rotate to pull air and floor debris into the plastic bottle inlet.
+10. **Debris Filtration & Retention**: The mesh filter traps collected garbage inside the bottle while allowing exhaust air to exit freely.
+
+---
+
+## 🖼️ Prototype Gallery
+
+| Sensor & Front View | Chassis Side Profile | Vacuum Suction Chamber |
 | :---: | :---: | :---: |
 | ![Front Sensor View](photos/ultrasonic_sensor_mount.jpg) | ![Side Profile](photos/robot_side_profile.jpg) | ![Suction Chamber](photos/suction_chamber_top_view.jpg) |
 
@@ -88,52 +153,35 @@ This project addresses these challenges by:
 | :---: | :---: | :---: |
 | ![Perspective View](photos/robot_perspective_view.jpg) | ![Top Front View](photos/robot_top_front_view.jpg) | ![Chassis Structure](photos/chassis_structure_view.jpg) |
 
-### Demo Videos
-Demonstration videos showing the physical robot prototype in action are available in the [`video/`](video/) directory:
+### Demonstration Videos
+Demonstration video clips of the physical prototype are stored in the [`video/`](video/) folder:
 - [`video/robot_demo_full.mp4`](video/robot_demo_full.mp4) - Complete operational demonstration
-- [`video/robot_demo_short.mp4`](video/robot_demo_short.mp4) - Quick functional highlight
+- [`video/robot_demo_short.mp4`](video/robot_demo_short.mp4) - Functional highlights
 
 ---
 
-## 🚀 Basic Setup & Usage
+## 💻 Firmware Setup & Code Upload
 
-### 1. Hardware Assembly
-- Connect the **Adafruit Motor Shield** onto the **Arduino UNO**.
-- Wire the 4 BO DC motors to motor channels M1, M2, M3, and M4 on the shield.
-- Connect the **SG90 Servo Motor** signal pin to Digital Pin `10`.
-- Connect the **HC-SR04 Ultrasonic Sensor** `Trig` to Analog Pin `A1` and `Echo` to Analog Pin `A0`.
-- Connect the **HC-05 Bluetooth Module** `TX` to Arduino `RX` (Pin 0) and `RX` to Arduino `TX` (Pin 1).
-- Connect the rechargeable battery pack through the main power switch to power both the Arduino and motor shield.
-
-### 2. Software Requirements
+### Prerequisites
 - **Arduino IDE** (v1.8.x or v2.x)
-- Required Libraries:
-  - `AFMotor.h` (Adafruit Motor Shield library)
-  - `Servo.h` (Standard Arduino Servo library)
+- Arduino board package for `Arduino Uno`
+- Standard `AFMotor.h` library for L293D motor driver support
 
-### 3. Code Upload & Mode Configuration
-1. Open [`code/vaccum.ino`](code/vaccum.ino) in the Arduino IDE.
-2. Select **Board**: `Arduino Uno` and choose your serial **Port**.
-3. In `loop()`, select your desired operating mode by uncommenting the corresponding function:
+### Upload Procedure:
+1. Open the Arduino project file [`code/vaccum.ino`](code/vaccum.ino) in the Arduino IDE.
+2. Select **Board**: `Arduino Uno` and choose the corresponding serial **COM Port**.
+3. **Select Operating Mode in Code**:
+   In `loop()`, uncomment the function corresponding to the specific demonstration mode required, while keeping other mode calls commented out:
    ```cpp
    void loop() {
-     // Obstacle();           // Enable for Autonomous Obstacle Avoidance
-     Bluetoothcontrol();      // Enable for Mobile App Bluetooth Control
-     // voicecontrol();       // Enable for Voice Command Control
+     // Obstacle();           // Enable for Autonomous Obstacle Avoidance Mode
+     Bluetoothcontrol();      // Enable for Mobile App Bluetooth Control Mode
+     // voicecontrol();       // Enable for Voice Command Control Mode
    }
    ```
-4. Temporarily disconnect the HC-05 `TX`/`RX` pins while uploading code via USB to avoid serial port conflict.
-5. Click **Upload**. Reconnect HC-05 after upload completes.
-
----
-
-## 🧰 Tools & Software Used
-
-- **Embedded Firmware**: C / C++ (Arduino Framework)
-- **IDE**: Arduino IDE
-- **Libraries**: `AFMotor.h`, `Servo.h`
-- **Design & Circuit Analysis**: Fritzing / System Schematics
-- **Mobile Control**: Bluetooth Serial Terminal / Bluetooth RC Controller App
+4. **Disconnect Bluetooth Pins During Upload**:
+   Disconnect the HC-05 `TX`/`RX` jumper wires from Arduino pins `0` and `1` before clicking **Upload** (to prevent serial conflict with USB flashing).
+5. Click **Upload**. Reconnect the HC-05 module once uploading completes.
 
 ---
 
@@ -141,13 +189,15 @@ Demonstration videos showing the physical robot prototype in action are availabl
 
 ```text
 .
-├── README.md                                          # Comprehensive project documentation
+├── README.md                                          # Master documentation file
+├── generate_diagrams.py                              # Python script for generating diagrams
 ├── architecture/
-│   └── block_diagram.jpg                             # System architecture block diagram
+│   ├── block_diagram.jpg                             # System architecture block diagram
+│   └── vacuum_mechanism_diagram.jpg                  # Bottle-based vacuum mechanism diagram
 ├── circuit/
-│   └── circuit_diagram.jpg                           # Hardware wiring and schematic diagram
+│   └── circuit_diagram.jpg                           # System circuit schematic diagram
 ├── code/
-│   └── vaccum.ino                                    # Provided Arduino UNO source code
+│   └── vaccum.ino                                    # Arduino UNO firmware source code
 ├── photos/
 │   ├── chassis_structure_view.jpg                    # Base chassis structural photo
 │   ├── power_switch_assembly.jpg                     # Power switch detail photo
@@ -156,8 +206,7 @@ Demonstration videos showing the physical robot prototype in action are availabl
 │   ├── robot_top_front_view.jpg                      # Top-front view photo
 │   ├── suction_chamber_top_view.jpg                  # Suction fan & dust collector photo
 │   └── ultrasonic_sensor_mount.jpg                   # Front ultrasonic sensor mount photo
-├── video/
-│   ├── robot_demo_full.mp4                           # Full project video demonstration
-│   └── robot_demo_short.mp4                          # Short video clip
-└── autonomous vaccum cleaner robot...pdf              # Original project documentation report
+└── video/
+    ├── robot_demo_full.mp4                           # Full project video demonstration
+    └── robot_demo_short.mp4                          # Short video clip
 ```
