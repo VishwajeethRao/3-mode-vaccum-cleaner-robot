@@ -181,28 +181,3 @@ Demonstration video clips of the physical prototype are stored in the [`video/`]
 5. Click **Upload**. Reconnect the HC-05 module once uploading completes.
 
 ---
-
-## 📁 Repository Structure
-
-```text
-.
-├── README.md                                          # Master documentation file
-├── generate_diagrams.py                              # Python script for generating diagrams
-├── architecture/
-│   └── block_diagram.jpg                             # Clean system architecture block diagram
-├── circuit/
-│   └── circuit_diagram.jpg                           # Clean circuit schematic block diagram
-├── code/
-│   └── vaccum.ino                                    # Arduino UNO firmware source code
-├── photos/
-│   ├── chassis_structure_view.jpg                    # Base chassis structural photo
-│   ├── power_switch_assembly.jpg                     # Power switch detail photo
-│   ├── robot_perspective_view.jpg                    # Complete robot perspective photo
-│   ├── robot_side_profile.jpg                        # Side profile photo
-│   ├── robot_top_front_view.jpg                      # Top-front view photo
-│   ├── suction_chamber_top_view.jpg                  # Suction fan & dust collector photo
-│   └── ultrasonic_sensor_mount.jpg                   # Front ultrasonic sensor mount photo
-└── video/
-    ├── robot_demo_full.mp4                           # Full project video demonstration
-    └── robot_demo_short.mp4                          # Short video clip
-```
